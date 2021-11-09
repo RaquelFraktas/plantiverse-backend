@@ -2,7 +2,7 @@ class PlantsSpider < Kimurai::Base
   @name = 'plants_spider'
   @engine = :mechanize 
   #engine is optional bc default is already mechanize
-#   @start_urls = ["https://www.houseplant411.com/houseplant"]
+  @start_urls ||=  ["https://www.houseplant411.com/houseplant"]
 
 #   def self.process(url)
 #     @start_urls = [url]
@@ -10,32 +10,14 @@ class PlantsSpider < Kimurai::Base
 #   end
 
   def parse(response, url:, data: {})
-    browser.fill_in "field-keywords", with: "Web Scraping Plants"
-    browser.click_on "Next"
-    page_nums = response.css('div.pageNumbers a')
-  
-    # Walk through pagination and collect products urls:
-    urls = []
-    loop do
-      response = browser.current_response
-      if page_nums.include?("Next")
-        response.each do |a|
-          urls << a[:href]
-        end
+    byebug
+    response.xpath("//div[@id='content-actual']").each do |a|
+        request_to :parse_plant_page, url: absolute_url(a[:href], base: url)
       end
-
-    browser.find(:xpath, "//a[@class='pageNumbers'][contains(value, "Next")]", wait: 1).click rescue break
-    # this probably is what clicks the next button
-    end
-
-    # Process all collected urls concurrently within 3 threads:
-    in_parallel(:parse_plant_page, urls, threads: 3)
-
-    response.xpath("//div[@class='resultsInd']").each do |plant|
-      request_to :parse_plant_page, url: absolute_url(plant[:href], base: url)
-    end
-      #next_page =response.at_xpath("//a[@class='pageNumbers']"[contains(value, "Next")])
-
+  
+      if next_page = response.at_xpath("//a[@class='next_page']")
+        request_to :parse, url: absolute_url(next_page[:href], base: url)
+      end
   end
  
   def parse_plant_page(response, url:, data: {})
@@ -61,7 +43,7 @@ class PlantsSpider < Kimurai::Base
 
 end
 
-PlantsSpider.crawl!
+# PlantsSpider.crawl!
 
 
 #do i need to use sidekiq to perform requests aynschonously for pagination?
