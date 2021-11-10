@@ -74,6 +74,10 @@ class Scraper
     plants
   end
 
+  def description_scraper(plant_name)
+    url = "https://www.gardenia.net/plant"
+  end
+
 
 end
 
