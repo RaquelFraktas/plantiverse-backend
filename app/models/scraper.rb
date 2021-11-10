@@ -45,15 +45,20 @@ class Scraper
 
     plant_details.each do |plant|
 
-      plant_info_array= plant.css(".ar12D").text.split(" ")
-      origin = [plant_info_array[plant_info_array.find_index("Origin") + 2]] 
+      plant_info_ary= plant.css(".ar12D").text.split(" ")
+      origin = [plant_info_ary[plant_info_ary.find_index("Origin") + 2]] 
           
-      if plant_info_array[plant_info_array.find_index("Origin") + 3] != "Climat"
-        origin << plant_info_array.slice(plant_info_array.find_index("Origin") + 3, 5).join(" ").match(/.+?(?=Climat)/)
+      if plant_info_ary[plant_info_ary.find_index("Origin") + 3] != "Climat"
+        origin << plant_info_ary.slice(plant_info_ary.find_index("Origin") + 3, 5).join(" ").match(/.+?(?=Climat)/)
       end 
       origin.join(" ")
     end
 
+
+
+
+
+    
   end
 
 
