@@ -29,41 +29,41 @@ class Scraper
 
       plant_names << doc.css('.title16')
       plant_details << doc.css("table[id~='Field list']")
-    #   .match(/.*?\A[^-]*\b/) this grabs the latin name of the plant
+    #   .match(/.*?\A[^-]*\b/) this grabs the latin name of the plant too
     end
     create_plants(plant_names, plant_details)
   end
 
 
   def create_plants(plant_names, plant_details)
+    plants = []
    
     plant_names.each do |plant|
       plant_array = plant.text.split(" ")
       latin_name = plant_array.slice(1,2).join(" ")
       common_names= plant_array.slice(4...).join(" ")
+
+      plant_details.each do |plant|
+        plant_info_ary= plant.css(".ar12D").text.split(" ")
+        origin = [plant_info_ary[plant_info_ary.find_index("Origin") + 2]] 
+            
+        if plant_info_ary[plant_info_ary.find_index("Origin") + 3] != "Climat"
+          origin << plant_info_ary.slice(plant_info_ary.find_index("Origin") + 3, 5).join(" ").match(/.+?(?= Climat)/)
+          #if the origin is longer than 1 word, make sure the next word is not "Climat" to include the whole origin
+        end 
+        origin.join(" ")
+
+        plant_info ={
+          name: latin_name,
+          alt_name: common_names,
+          origin: origin
+        }
+        plants << plant_info
+      end
     end
-
-    plant_details.each do |plant|
-
-      plant_info_ary= plant.css(".ar12D").text.split(" ")
-      origin = [plant_info_ary[plant_info_ary.find_index("Origin") + 2]] 
-          
-      if plant_info_ary[plant_info_ary.find_index("Origin") + 3] != "Climat"
-        origin << plant_info_ary.slice(plant_info_ary.find_index("Origin") + 3, 5).join(" ").match(/.+?(?=Climat)/)
-      end 
-      origin.join(" ")
-    end
-
-
-
-
-
-    
+    plants
   end
 
 
 end
 
-
-scrape= Scraper.new
-scrape.scrape_plants_index
