@@ -1,22 +1,25 @@
 class Scraper
 
   def scrape_plants_index
-
-    plant_index_url= "http://www.tropicopia.com/house-plant/list/gallery-01.html"
-    doc= Nokogiri::HTML(URI.open(plant_index_url))   
-    plants_container = doc.css("table[id~='Results 2']")
-    plant_records = plants_container.css('#record')
-    plants = plant_records.css('a')
-
+    url_index = 0
     plants_urls= []
 
-    plants.each do |plant|
-      url = plant.attribute('href').value
-      plants_urls << url
+    9.times do 
+      new_index= url_index +=1
+      plant_index_url= "http://www.tropicopia.com/house-plant/list/gallery-0#{new_index.to_s}.html"
+     
+    # plant_index_url= "http://www.tropicopia.com/house-plant/list/gallery-01.html"
+      doc= Nokogiri::HTML(URI.open(plant_index_url))   
+      plants_container = doc.css("table[id~='Results 2']")
+      plant_records = plants_container.css('#record')
+      plants = plant_records.css('a')
+  
+      plants.each do |plant|
+        url = plant.attribute('href').value
+        plants_urls << url
+      end
     end
-
     scrape_plant_pages(plants_urls)
-
   end
 
   def scrape_plant_pages(plants_urls)
@@ -40,15 +43,22 @@ class Scraper
    
     plant_names.each do |plant|
       plant_array = plant.text.split(" ")
-      latin_name = plant_array.slice(1,2).join(" ")
-      common_names= plant_array.slice(4...).join(" ")
+      if plant_array[1] == "plant"
+        latin_name = plant_array.slice(2,3).join(" ").gsub("- ", "")
+        #don't need the gsub? try to take out the - out of the last name of the last plant
+      else
+        latin_name = plant_array.slice(1,2).join(" ")
+      end
+
+      common_names= plant_array.slice(4...).join(" ").gsub("- ", "")
 
       plant_details.each do |plant|
         plant_info_ary= plant.css(".ar12D").text.split(" ")
         origin = [plant_info_ary[plant_info_ary.find_index("Origin") + 2]] 
             
         if plant_info_ary[plant_info_ary.find_index("Origin") + 3] != "Climat"
-          origin << plant_info_ary.slice(plant_info_ary.find_index("Origin") + 3, 5).join(" ").match(/.+?(?= Climat)/)
+          plant_info_slice = plant_info_ary.slice(plant_info_ary.find_index("Origin") + 3, 5).join(" ").match(/.+?(?= Climat)/)
+          origin << plant_info_slice 
           #if the origin is longer than 1 word, make sure the next word is not "Climat" to include the whole origin
         end 
         origin.join(" ")
