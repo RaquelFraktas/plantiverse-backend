@@ -54,21 +54,25 @@ class Scraper
 
       plant_details.each do |plant|
         plant_info_ary= plant.css(".ar12D").text.split(" ")
-        origin = [plant_info_ary[plant_info_ary.find_index("Origin") + 2]] 
+        origin= []
+        origin << plant_info_ary[plant_info_ary.find_index("Origin") + 2]
             
         if plant_info_ary[plant_info_ary.find_index("Origin") + 3] != "Climat"
           plant_info_slice = plant_info_ary.slice(plant_info_ary.find_index("Origin") + 3, 5).join(" ").match(/.+?(?= Climat)/)
-          origin << plant_info_slice 
+          origin << plant_info_slice
           #if the origin is longer than 1 word, make sure the next word is not "Climat" to include the whole origin
         end 
+        
         origin.join(" ")
 
         plant_info ={
           name: latin_name,
           alt_name: common_names,
-          origin: origin
+          origin: origin,
         }
         plants << plant_info
+# it could be bc im iterating inside of one of the plant instances - why im getting same copies or origin.
+# fix the scope
       end
     end
     plants
