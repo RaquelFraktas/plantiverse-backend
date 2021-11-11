@@ -6,6 +6,7 @@ class Plant < ApplicationRecord
         plant.alt_name = plant_hash[:alt_name]
         plant.origin = plant_hash[:origin]
         # .match(/[a-zA-Z&]/) mb dont need
+        # why do the ID numbers in the JSON page skip around?
       end
     end
 
