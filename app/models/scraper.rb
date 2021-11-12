@@ -52,17 +52,28 @@ class Scraper
         latin_name= plant_array[11]
       end
 
-      find_common= plant_array.find_index("-")
-      common_names_idx = find_common + 1
-
+      find_common_names= plant_array.find_index("-")
+      common_names_idx = find_common_names + 1
       common_names = plant_array.slice(common_names_idx...).join(" ").gsub("<!-- Common name : -->", "")
-      origin= plant.css('.ar12D')[14].inner_text.split(" ").join(" ")
+
+      find_origin = plant.css('.ar12D')[14].inner_text.split(" ").join(" ")
+
+      if find_origin== "Origin :"
+        origin= plant.css('.ar12D')[15].inner_text.split(" ").join(" ")
+      else
+        origin= find_origin
+      end
+
+      img_src= plant.css('.ar12D').css('img').attr('src').value
+      img_url= "http://www.tropicopia.com/house-plant" +img_src.gsub("..", "")
+
 
 
         plant_info ={
           name: latin_name,
           alt_name: common_names,
           origin: origin,
+          img_url: img_url
         }
         plants << plant_info
     end

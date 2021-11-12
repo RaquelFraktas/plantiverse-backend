@@ -5,7 +5,7 @@ class Plant < ApplicationRecord
       Plant.find_or_create_by(name: plant_hash[:name]) do |plant|
         plant.alt_name = plant_hash[:alt_name]
         plant.origin = plant_hash[:origin]
-        # .match(/[a-zA-Z&]/) mb dont need
+        plant.img_url = plant_hash[:img_url]
         # why do the ID numbers in the JSON page skip around?
       end
     end
