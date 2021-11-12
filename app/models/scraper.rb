@@ -57,17 +57,12 @@ class Scraper
       common_names = plant_array.slice(common_names_idx...).join(" ").gsub("<!-- Common name : -->", "")
 
       find_origin = plant.css('.ar12D')[14].inner_text.split(" ").join(" ")
-
-      if find_origin== "Origin :"
-        origin= plant.css('.ar12D')[15].inner_text.split(" ").join(" ")
-      else
-        origin= find_origin
-      end
-
+      find_origin== "Origin :" ? origin= plant.css('.ar12D')[15].inner_text.split(" ").join(" ") : origin= find_origin
+    
+      byebug 
+      
       img_src= plant.css('.ar12D').css('img').attr('src').value
       img_url= "http://www.tropicopia.com/house-plant" +img_src.gsub("..", "")
-
-
 
         plant_info ={
           name: latin_name,
@@ -75,6 +70,7 @@ class Scraper
           origin: origin,
           img_url: img_url
         }
+
         plants << plant_info
     end
     plants
