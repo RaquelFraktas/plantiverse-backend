@@ -41,7 +41,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "active_model_serializers", "~> 0.10.12"
 
-# web scraping tool based on nokogiri and capybara
-# gem 'kimurai'
+
 gem 'nokogiri'
 gem 'open-uri'
+
+gem "jwt", "~> 2.3"
+gem "dotenv-rails", "~> 2.7"
