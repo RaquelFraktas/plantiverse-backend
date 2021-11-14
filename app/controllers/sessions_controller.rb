@@ -13,4 +13,7 @@ class SessionsController < ApplicationController
     render json: {user: UserSerializer.new(logged_in_user), token: encode_token(logged_in_user.id)} 
   end
 
+  def delete
+  end
+
 end
