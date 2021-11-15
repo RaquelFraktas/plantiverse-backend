@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :user_plants
-  resources :users, only: [:create, :update]
+  resources :users, only: [:create, :update, :show, :index]
   resources :plants, only: [:index, :show]
 
   post "/login", to: "sessions#create"
