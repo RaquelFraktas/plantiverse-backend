@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :user_plants
   resources :users, only: [:create]
   resources :plants, only: [:index, :show]
 
