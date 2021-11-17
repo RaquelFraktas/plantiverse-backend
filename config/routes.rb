@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :comments
+  resources :forum_topics
   resources :user_plants
   resources :users, only: [:create, :update, :show, :index]
   resources :plants, only: [:index, :show]
