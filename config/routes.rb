@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/me", to: "sessions#autologin"
   get "/message_boards", to: "forum_topics#index"
+  get "/message_boards/:id", to: "forum_topics#show"
   post "/message_boards", to: "forum_topics#create"
   
 
