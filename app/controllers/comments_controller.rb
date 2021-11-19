@@ -2,13 +2,14 @@ class CommentsController < ApplicationController
 
   def index
     comments = Comments.all
-    render json: forum_topics
+    render json: forum_topic
   end
 
   def create
     comment = Comment.new(comment_forum_params)
     if comment.save
-      render json: comment: Comment.new(comment)} 
+      byebug
+      render json: {comment: Comment.new(comment)} 
     else
       render json:{errors: comment.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end

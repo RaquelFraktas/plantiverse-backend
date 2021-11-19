@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :comments
+  # resources :comments
   # resources :forum_topics, only: [:create, :show, :index]
   resources :user_plants
   resources :comments, only: [:create, :index]
@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "/message_boards", to: "forum_topics#index"
   get "/message_boards/:id", to: "forum_topics#show"
   post "/message_boards", to: "forum_topics#create"
+  get "/message_boards/:id/comments", to: "comments#index"
+  post "/message_boards/:id/comments", to: "comments#create"
   
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
