@@ -1,8 +1,11 @@
 class PlantsController < ApplicationController
+  include Pagy::Backend
 
   def index
-    plants = Plant.all
-    render json: plants
+    @pagy, plants = pagy(Plant.all)
+
+    render json: { plant_records: plants, pagy: pagy_metadata(@pagy) }
+    # render json: plants
   end
   
 
