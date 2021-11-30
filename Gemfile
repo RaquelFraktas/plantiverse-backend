@@ -48,3 +48,4 @@ gem 'open-uri'
 gem "jwt", "~> 2.3"
 gem "dotenv-rails", "~> 2.7"
 gem 'pagy'
+gem 'betterlorem'
