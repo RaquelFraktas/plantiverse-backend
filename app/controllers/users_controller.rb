@@ -20,13 +20,24 @@ class UsersController < ApplicationController
   end
 
   def update
+    # byebug
     user= User.find(params["_json"][0][:id])
     plant= Plant.find(params["_json"][1])
-    if !user.plants.include?(plant)
-      user.plants << plant
+    if request.headers["RemovePlant"]
+      plant_in_collection = user.user_plants.find_by(plant_id: plant.id)
+      plant_in_collection.delete
+    elsif request.headers["AddPlant"] 
+      if !user.plants.include?(plant)
+        user.plants << plant
+      end
     end
     render json: user
   end
+
+  # def delete
+  #   byebug
+  #   user = User.find(params)["_json"]
+  # end
 
   private
 
