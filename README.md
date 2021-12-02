@@ -1,24 +1,17 @@
-# README
+# PlantiVerse
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby 2.6.1p33
 
-* System dependencies
+* Run bundle install in command line
 
-* Configuration
+* Run rails db:seed to get plant data
 
-* Database creation
+* Your rails server will be displayed on [http://localhost:3000]
 
-* Database initialization
 
-* How to run the test suite
+The frontend of this app is located here: 
+https://github.com/RaquelFraktas/plantiverse-frontend
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
