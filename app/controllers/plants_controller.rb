@@ -15,11 +15,12 @@ class PlantsController < ApplicationController
     }
   end
 
-
+  
   def show
     plant = Plant.find(params[:id])
     render json: plant
   end
 
+  # //create a new route, but call the params to search, and only return the plants that relate to that search. 
 
 end
