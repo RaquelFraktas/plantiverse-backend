@@ -6,6 +6,7 @@ class ForumTopic < ApplicationRecord
   validates_format_of :img_url,
     :with    => %r{\.(gif|jpe?g|png)$}i,
     :message => "Must have an image extension",
-    :multiline => true
+    :multiline => true,
+    :allow_blank=> true
 
 end
