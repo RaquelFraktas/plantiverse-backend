@@ -1,8 +1,6 @@
 # PlantiVerse
 
 
-Things you may want to cover:
-
 * Ruby 2.6.1p33
 
 * Run bundle install in command line
