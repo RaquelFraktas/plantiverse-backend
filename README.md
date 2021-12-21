@@ -20,3 +20,4 @@ Gems used for functionality:
 The frontend of this app is located here: 
 https://github.com/RaquelFraktas/plantiverse-frontend
 
+check the git
