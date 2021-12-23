@@ -66,7 +66,7 @@ class Scraper
           name: latin_name.gsub(/[^0-9a-zA-Z, '']+/, ""),
           alt_name: common_names,
           origin: origin.gsub("Climat :", ""),
-          img_url: img_url
+          img_url: img_url.gsub("http", "https")
         }
 
         plants << plant_info
