@@ -1,15 +1,12 @@
 # PlantiVerse
 
-
 * Ruby 2.6.1p33
-
 * Run bundle install in command line
-
+* Run rails db:migrate
 * Run rails db:seed to get plant data
-
 * Your rails server will be displayed on [http://localhost:3000]
 
-Gems used for functionality:
+## Gems used for functionality:
 * Nokogiri for scaping
 * Pagy for pagination
 * betterlorem as a lorem ipsum generator for plant descriptions
